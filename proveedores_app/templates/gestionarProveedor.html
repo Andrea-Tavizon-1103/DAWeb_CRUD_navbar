@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block cuerpo %}
+{% load static %}
+
+<div class="row"> <!-- la filas-->
+    <div class="col-sm-12 col-md-4 col-lg-4 xl-4"> <!-- Columna izquierda-->
+        <h1> Proveedores </h1>
+        <div class="card"><!-- tarjeta-->
+            <div class="card-body">
+                <form action="/registrarProveedor/" method="post"> {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" id="txtidproveedor" name="txtidproveedor" placeholder="ID Proveedor" class="form-control" minlength="1" maxlength="6" required><br>
+                    </div>
+                    <div class="form-group py-3">
+                        <input type="text" id="txtnombre" name="txtnombre" placeholder="Nombre" class="form-control" minlength="1" maxlength="100" required><br>
+                    </div>
+                    <div class="form-group py-3">
+                        <input type="text" id="txtcontacto" name="txtcontacto" placeholder="Contacto" class="form-control" minlength="1" maxlength="100" required><br>
+                    </div>
+                    <div class="form-group py-3">
+                        <input type="email" id="txtcorreo" name="txtcorreo" placeholder="Correo" class="form-control" minlength="1" maxlength="100" required><br>
+                    </div>
+                    <div class="form-group py-3">
+                        <input type="text" id="numtelefono" name="numtelefono" placeholder="Teléfono" class="form-control" minlength="1" maxlength="15" required><br>
+                    </div>
+                    <div class="form-group py-3">
+                        <input type="text" id="txtdireccion" name="txtdireccion" placeholder="Dirección" class="form-control" minlength="1" maxlength="100" required><br>
+                    </div>
+                    <div class="form-group py-3">
+                        <input type="date" id="txtfecharegistro" name="txtfecharegistro" placeholder="Fecha de Registro" class="form-control" required><br>
+                    </div>
+                    <div class="form-group py-3">
+                        <button type="submit" class="btn btn-dark"> Guardar Proveedor </button><br>
+                    </div>
+                </form>
+            </div>
+        </div><!-- tarjeta-->
+    </div><!-- Columna izquierda-->
+
+    <div class="col-sm-12 col-md-8 col-lg-8 xl-8"> <!-- Columna derecha -->
+        <h1> Listado De Proveedores </h1>
+        <img class="w-50" src="{% static 'img/inventario.jpg'%}" alt="Tavizon" width="150" height="300">
+        <br>
+        <br>
+        <!-- La tabla -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">ID Proveedor</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Contacto</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Teléfono</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col">Fecha Registro</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in misproveedores %}
+                <tr>
+                    <td>
+                        {{ forloop.counter }}
+                    </td>
+                    <td>
+                        {{ p.id_proveedor }}
+                    </td>
+                    <td>
+                        {{ p.nombre }}
+                    </td>
+                    <td>
+                        {{ p.contacto }}
+                    </td>
+                    <td>
+                        {{ p.correo }}
+                    </td>
+                    <td>
+                        {{ p.telefono }}
+                    </td>
+                    <td>
+                        {{ p.direccion }}
+                    </td>
+                    <td>
+                        {{ p.fecha_registro | date:'d-m-y'}}
+                    </td>
+                    <td> <a href="seleccionarProveedor/{{ p.idproveedor }}" class="btn btn-info"> Editar </a> </td>
+                    <td> <a href="borrarProveedor/{{ p.idproveedor }}" class="btn btn-danger"> Borrar </a> </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- La tabla -->
+    </div><!-- Columna derecha -->
+</div>
+
+{% endblock %}
